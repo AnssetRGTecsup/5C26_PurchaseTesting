@@ -1,9 +1,5 @@
 ﻿using UnityEditor;
 using System;
-using UnityEditor.VersionControl;
-using UnityEditor.Purchasing;
-using UnityEditor.PackageManager;
-using static UnityEditor.Progress;
 
 namespace Assets.Script.GameSystem.PurchaseSystem
 {

@@ -4,7 +4,6 @@ using UnityEngine.Events;
 using System;
 using TMPro;
 using System.Collections;
-using UnityEngine.UI;
 
 namespace Assets.Script.GameSystem.PurchaseSystem
 {
@@ -22,6 +21,11 @@ namespace Assets.Script.GameSystem.PurchaseSystem
         public UnityEvent OnPurchaseRemoveAdds;
 
         public UnityEvent OnPurchaseSubscription;
+
+        private void Start()
+        {
+            SetUpBuider();
+        }
 
         private void SetUpBuider()
         {
@@ -63,7 +67,7 @@ namespace Assets.Script.GameSystem.PurchaseSystem
 
             print("Purchase Complete" + product.definition.id);
 
-            if (product.definition.id == itemConsumable.Id)//consumable item is pressed
+            if (product.definition.id == itemNonConsumable.Id)//consumable item is pressed
             {
                 /*string receipt = product.receipt;
                 data = JsonUtility.FromJson<Data>(receipt);
@@ -79,7 +83,7 @@ namespace Assets.Script.GameSystem.PurchaseSystem
 
                 OnPurchaseCurrency?.Invoke(50);
             }
-            else if (product.definition.id == itemNonConsumable.Id)//non consumable
+            else if (product.definition.id == itemConsumable.Id)//non consumable
             {
                 //RemoveAds();
 
@@ -210,91 +214,6 @@ namespace Assets.Script.GameSystem.PurchaseSystem
                 yield return null;
             }
             coinTxt.GetComponent<Animation>().Stop();
-
-        }
-    }
-
-    public class AdHolder : MonoBehaviour
-    {
-        [SerializeField] private GameObject adHolderGameObject;
-
-        public void SetUpAd()
-        {
-            adHolderGameObject.SetActive(true);
-        }
-
-        public void DisableAds()
-        {
-            adHolderGameObject.SetActive(false);
-
-            Destroy(this);
-        }
-    }
-
-    public class PremiumAccess : MonoBehaviour
-    {
-        [SerializeField] private GameObject premiumHolderGameObject;
-
-        public void DisablePremium()
-        {
-            premiumHolderGameObject.SetActive(true);
-        }
-
-        public void EnablePremium()
-        {
-            premiumHolderGameObject.SetActive(false);
-        }
-    }
-
-    public class PurchaseCurrencyHolder : MonoBehaviour
-    {
-        [Header("Currency Data")]
-        [SerializeField] private CurrencyData currencyData;
-
-        [Header("Data Holders")]
-        [SerializeField] private Image currencyIcon;
-        [SerializeField] private TextMeshProUGUI currencyText;
-
-        [Header("Purchase Settings")]
-        [SerializeField] private Button buyCurrencyBtn;
-        [SerializeField] private TextMeshProUGUI buyAmountText;
-        [SerializeField] private Image currencyIconBtn;
-
-        private void Start()
-        {
-            currencyIcon.sprite = currencyData.Icon;
-            currencyText.text = currencyData.Quantity.ToString("000");
-
-            currencyIconBtn.sprite = currencyData.Icon;
-            buyAmountText.text = $"+{currencyData.Item.Price.ToString("00")}";
-        }
-
-        private void UpdateCurrency()
-        {
-
-        }
-
-        void AddCoins(int num)
-        {
-            int coins = PlayerPrefs.GetInt("totalCoins");
-            coins += num;
-            PlayerPrefs.SetInt("totalCoins", coins);
-            StartCoroutine(startCoinShakeEffect(coins - num, coins, .5f));
-        }
-        float val;
-        IEnumerator startCoinShakeEffect(int oldValue, int newValue, float animTime)
-        {
-            float ct = 0;
-            float nt;
-            float tot = animTime;
-            while (ct < tot)
-            {
-                ct += Time.deltaTime;
-                nt = ct / tot;
-                val = Mathf.Lerp(oldValue, newValue, nt);
-                currencyText.text = ((int)(val)).ToString();
-                yield return null;
-            }
 
         }
     }

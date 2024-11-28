@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Assets.Script.GameSystem
 {
+    [CreateAssetMenu(fileName = "Custom Currency", menuName = "Scriptable Objects/Currency System/Custom Currency")]
     public class CurrencyData : ScriptableObject
     {
         [SerializeField] protected Sprite icon;
