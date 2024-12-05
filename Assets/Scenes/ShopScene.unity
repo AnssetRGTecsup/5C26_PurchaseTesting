@@ -1340,7 +1340,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &318944893
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1539,7 +1539,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &410409517
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1787,6 +1787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currencyData: {fileID: 11400000, guid: 8b6be497aefb0ee448fc8f71716e080d, type: 2}
+  nonConsumableItem: {fileID: 11400000, guid: 657be4eb5f27b1940afd041fbcecca05, type: 2}
   currencyIcon: {fileID: 1678303458}
   currencyText: {fileID: 603583566}
   buyCurrencyBtn: {fileID: 2085649916}
@@ -2102,7 +2103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 604793072}
-  - component: {fileID: 604793071}
+  - component: {fileID: 604793073}
   m_Layer: 0
   m_Name: ShopManager
   m_TagString: Untagged
@@ -2110,57 +2111,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &604793071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604793070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 265deeb941d983d42b439634977ea8d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemNonConsumable:
-    Name: Currency 50
-    Id: currency_50
-    Description: Buy 50 Currency
-    Price: 50
-  itemConsumable:
-    Name: No Ads
-    Id: no_Ads
-    Description: Buy No Ads
-    Price: 250
-  itemSubscription:
-    Name: Subscription
-    Id: subscription_500
-    Description: Buy Game Subscription
-    Price: 500
-    TimeDuration: 60
-  OnPurchaseCurrency:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 466153019}
-        m_TargetAssemblyTypeName: Assets.Script.GameSystem.PurchaseSystem.PurchaseCurrencyHolder,
-          Assembly-CSharp
-        m_MethodName: UpdateCurrency
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  OnPurchaseRemoveAdds:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPurchaseSubscription:
-    m_PersistentCalls:
-      m_Calls: []
-  coinTxt: {fileID: 0}
 --- !u!4 &604793072
 Transform:
   m_ObjectHideFlags: 0
@@ -2176,6 +2126,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &604793073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604793070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b715faf0502b0644da6b325e37be1e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonConsumables:
+  - {fileID: 11400000, guid: 8cc4bc1485df60241914352804518207, type: 2}
+  - {fileID: 11400000, guid: ae0285fbd02c87245ab8f646438086ae, type: 2}
+  OnPurchaseRemoveAdds:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPurchaseSubscription:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &640964219
 GameObject:
   m_ObjectHideFlags: 0
@@ -2554,7 +2525,21 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 769744699}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 604793073}
+        m_TargetAssemblyTypeName: Assets.Script.GameSystem.PurchaseSystem.PurchaseSystemManager,
+          Assembly-CSharp
+        m_MethodName: BuyNonConsumableItem
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: ae0285fbd02c87245ab8f646438086ae, type: 2}
+          m_ObjectArgumentAssemblyTypeName: Assets.Script.GameSystem.ProductItem,
+            Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &769744699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3077,6 +3062,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 957294858}
   m_CullTransparentMesh: 1
+--- !u!1 &986993053
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 986993055}
+  - component: {fileID: 986993054}
+  m_Layer: 0
+  m_Name: Gold Coin Listeners
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &986993054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986993053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91d8ff521617364387ab34d72dcc142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameEvent: {fileID: 11400000, guid: 965a3b08d2bed4345b32b7097910ba2a, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 466153019}
+        m_TargetAssemblyTypeName: Assets.Script.GameSystem.PurchaseSystem.PurchaseCurrencyHolder,
+          Assembly-CSharp
+        m_MethodName: UpdateCurrency
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!4 &986993055
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986993053}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1053505381
 GameObject:
   m_ObjectHideFlags: 0
@@ -3323,6 +3369,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1147993476}
   m_CullTransparentMesh: 1
+--- !u!1 &1185342463
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1185342465}
+  - component: {fileID: 1185342464}
+  m_Layer: 0
+  m_Name: Silver Con Listeners
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1185342464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185342463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b91d8ff521617364387ab34d72dcc142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameEvent: {fileID: 11400000, guid: f099369b23accc145886e27884a6a175, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1920886734}
+        m_TargetAssemblyTypeName: Assets.Script.GameSystem.PurchaseSystem.PurchaseCurrencyHolder,
+          Assembly-CSharp
+        m_MethodName: UpdateCurrency
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!4 &1185342465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185342463}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1241195890
 GameObject:
   m_ObjectHideFlags: 0
@@ -5179,7 +5286,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1915029336
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5196,9 +5303,9 @@ RectTransform:
   - {fileID: 756124941}
   m_Father: {fileID: 185112713}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 352, y: -416}
   m_SizeDelta: {x: 704, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1915029337
@@ -5214,6 +5321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currencyData: {fileID: 11400000, guid: ffc45815e079b0643b6667e2f39fdb54, type: 2}
+  nonConsumableItem: {fileID: 0}
   currencyIcon: {fileID: 752356076}
   currencyText: {fileID: 1736272726}
   buyCurrencyBtn: {fileID: 347958502}
@@ -5467,6 +5575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currencyData: {fileID: 11400000, guid: f8fff0730178eb348953d5e6710fb133, type: 2}
+  nonConsumableItem: {fileID: 11400000, guid: 2b0c934ca85ecd3418b36b8fdd89dc9f, type: 2}
   currencyIcon: {fileID: 98961788}
   currencyText: {fileID: 2114966419}
   buyCurrencyBtn: {fileID: 769744698}
@@ -5751,14 +5860,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 604793071}
-        m_TargetAssemblyTypeName: Assets.Script.GameSystem.PurchaseSystem.ShopManager,
+      - m_Target: {fileID: 604793073}
+        m_TargetAssemblyTypeName: Assets.Script.GameSystem.PurchaseSystem.PurchaseSystemManager,
           Assembly-CSharp
         m_MethodName: BuyNonConsumableItem
-        m_Mode: 1
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 11400000, guid: 8cc4bc1485df60241914352804518207, type: 2}
+          m_ObjectArgumentAssemblyTypeName: Assets.Script.GameSystem.ProductItem,
+            Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6016,7 +6126,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1392241190}
-  - {fileID: 604793072}
   - {fileID: 1870179449}
   - {fileID: 1768646296}
   - {fileID: 1366405245}
+  - {fileID: 604793072}
+  - {fileID: 986993055}
+  - {fileID: 1185342465}

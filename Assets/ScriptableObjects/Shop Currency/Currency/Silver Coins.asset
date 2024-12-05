@@ -10,13 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8712396a2231cf04288dccebb76f76e7, type: 3}
-  m_Name: Gold Coins
+  m_Name: Silver Coins
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: b0d6411d5ba281c459c5a002bd3db227, type: 3}
+  icon: {fileID: 21300000, guid: 3cf5f01e04a31974e8dc3f699194a882, type: 3}
   quantity: 0
-  item:
-    Name: Currency 50
-    Id: currency_50
-    Description: Buy 50 Currency
-    Price: 50
   description: Basic Currency for the Game System

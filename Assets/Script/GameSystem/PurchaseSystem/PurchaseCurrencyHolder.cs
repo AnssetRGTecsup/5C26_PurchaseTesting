@@ -9,6 +9,7 @@ namespace Assets.Script.GameSystem.PurchaseSystem
     {
         [Header("Currency Data")]
         [SerializeField] private CurrencyData currencyData;
+        [SerializeField] private NonConsumableItem nonConsumableItem;
 
         [Header("Data Holders")]
         [SerializeField] private Image currencyIcon;
@@ -25,17 +26,20 @@ namespace Assets.Script.GameSystem.PurchaseSystem
             currencyText.text = currencyData.Quantity.ToString("000");
 
             currencyIconBtn.sprite = currencyData.Icon;
-            buyAmountText.text = $"+{currencyData.Item.Price.ToString("00")}";
+            buyAmountText.text = $"+{nonConsumableItem.Amount.ToString("00")}";
         }
 
-        public void UpdateCurrency(int num)
+        public void UpdateCurrency()
         {
             Debug.Log("Called to Buy");
 
-            int coins = PlayerPrefs.GetInt("totalCoins");
-            coins += num;
-            PlayerPrefs.SetInt("totalCoins", coins);
-            StartCoroutine(startCoinShakeEffect(coins - num, coins, .5f));
+            int amount = nonConsumableItem.Amount;
+
+            int _currentValue = currencyData.Quantity;
+            currencyData.ModifyQuantity(amount);
+
+
+            StartCoroutine(startCoinShakeEffect(_currentValue, currencyData.Quantity, .5f));
         }
 
         IEnumerator startCoinShakeEffect(int oldValue, int newValue, float animTime)
@@ -49,7 +53,7 @@ namespace Assets.Script.GameSystem.PurchaseSystem
                 ct += Time.deltaTime;
                 nt = ct / tot;
                 val = Mathf.Lerp(oldValue, newValue, nt);
-                currencyText.text = ((int)(val)).ToString();
+                currencyText.text = ((int)(val)).ToString("000");
                 yield return null;
             }
 

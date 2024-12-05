@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using System;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace Assets.Script.GameSystem.PurchaseSystem
 {
@@ -24,11 +25,14 @@ namespace Assets.Script.GameSystem.PurchaseSystem
 
         private void Start()
         {
+            Debug.Log("Called from Start");
             SetUpBuider();
         }
 
         private void SetUpBuider()
         {
+            Debug.Log("Called from SetUpBuilder");
+
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
 
             builder.AddProduct(itemNonConsumable.Id, ProductType.NonConsumable);
@@ -69,18 +73,6 @@ namespace Assets.Script.GameSystem.PurchaseSystem
 
             if (product.definition.id == itemNonConsumable.Id)//consumable item is pressed
             {
-                /*string receipt = product.receipt;
-                data = JsonUtility.FromJson<Data>(receipt);
-                payload = JsonUtility.FromJson<Payload>(data.Payload);
-                payloadData = JsonUtility.FromJson<PayloadData>(payload.json);
-
-                int quantity = payloadData.quantity;
-
-                for (int i = 0; i < quantity; i++)
-                {
-                    AddCoins(50);
-                }*/
-
                 OnPurchaseCurrency?.Invoke(50);
             }
             else if (product.definition.id == itemConsumable.Id)//non consumable
@@ -133,7 +125,6 @@ namespace Assets.Script.GameSystem.PurchaseSystem
 
         private void CheckSubscription(string id)
         {
-
             var subProduct = _storeController.products.WithID(id);
             if (subProduct != null)
             {
@@ -143,21 +134,6 @@ namespace Assets.Script.GameSystem.PurchaseSystem
                     {
                         var subManager = new SubscriptionManager(subProduct, null);
                         var info = subManager.getSubscriptionInfo();
-                        /*print(info.getCancelDate());
-                        print(info.getExpireDate());
-                        print(info.getFreeTrialPeriod());
-                        print(info.getIntroductoryPrice());
-                        print(info.getProductId());
-                        print(info.getPurchaseDate());
-                        print(info.getRemainingTime());
-                        print(info.getSkuDetails());
-                        print(info.getSubscriptionPeriod());
-                        print(info.isAutoRenewing());
-                        print(info.isCancelled());
-                        print(info.isExpired());
-                        print(info.isFreeTrial());
-                        print(info.isSubscribed());*/
-
 
                         if (info.isSubscribed() == Result.True)
                         {
@@ -186,34 +162,6 @@ namespace Assets.Script.GameSystem.PurchaseSystem
             {
                 print("product not found !!");
             }
-
-        }
-
-        [Header("Consumable")]
-        public TextMeshProUGUI coinTxt;
-        void AddCoins(int num)
-        {
-            int coins = PlayerPrefs.GetInt("totalCoins");
-            coins += num;
-            PlayerPrefs.SetInt("totalCoins", coins);
-            StartCoroutine(startCoinShakeEffect(coins - num, coins, .5f));
-        }
-        float val;
-        IEnumerator startCoinShakeEffect(int oldValue, int newValue, float animTime)
-        {
-            float ct = 0;
-            float nt;
-            float tot = animTime;
-            coinTxt.GetComponent<Animation>().Play("textShake");
-            while (ct < tot)
-            {
-                ct += Time.deltaTime;
-                nt = ct / tot;
-                val = Mathf.Lerp(oldValue, newValue, nt);
-                coinTxt.text = ((int)(val)).ToString();
-                yield return null;
-            }
-            coinTxt.GetComponent<Animation>().Stop();
 
         }
     }
